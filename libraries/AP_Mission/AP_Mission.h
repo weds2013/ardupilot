@@ -510,6 +510,9 @@ public:
     /// clear - clears out mission
     bool clear();
 
+    /// clear EEPROM
+    void clearMem();
+
     /// truncate - truncate any mission items beyond given index
     void truncate(uint16_t index);
 

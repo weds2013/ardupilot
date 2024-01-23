@@ -96,6 +96,8 @@ void AP_Mission::init()
     if (AP_MISSION_MASK_MISSION_CLEAR & _options) {
         GCS_SEND_TEXT(MAV_SEVERITY_INFO, "Clearing Mission");
         clear();
+        // Clear EEPROM
+        clearMem();
     }
 
     _last_change_time_ms = AP_HAL::millis();
@@ -291,6 +293,12 @@ bool AP_Mission::clear()
     return true;
 }
 
+void AP_Mission::clearMem()
+{
+    for (uint16_t i = 0; i < _storage.size(); i++) {
+        _storage.write_byte(i, 0xFF);
+    }
+}
 
 /// trucate - truncate any mission items beyond index
 void AP_Mission::truncate(uint16_t index)
